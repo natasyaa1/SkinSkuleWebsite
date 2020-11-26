@@ -47,11 +47,11 @@
 					Skin Type: 
 
 <select name="sk" id="SkinType_ID">
-  <option value="normal">Normal</option>
-  <option value="combination">Combination</option>
-  <option value="oily">Oily</option>
-  <option value="sensitive">Sensitive</option>
-  <option value="dry">Dry</option>
+  <option value="Normal">Normal</option>
+  <option value="Combination">Combination</option>
+  <option value="Oily">Oily</option>
+  <option value="Sensitive">Sensitive</option>
+  <option value="Dry">Dry</option>
 </select>
 						<input 
 						type="submit"

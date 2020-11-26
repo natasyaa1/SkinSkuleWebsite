@@ -47,7 +47,7 @@ public class SignupController extends HttpServlet {
 			 * If the isValid value is true, assign session attributes to the
 			 * current member.
 			 */
-			if (!uniqueemail) {
+		if (!uniqueemail) {
 
 //				HttpSession session = request.getSession(true);
 //				session.setAttribute("currentSessionmember", member);
@@ -64,9 +64,12 @@ public class SignupController extends HttpServlet {
 				 * member who has logged into the system.
 				 */
 				//session.setMaxInactiveInterval(900);
-			}
-			
-			//If email is unique, 
+			} else {
+				/**
+				 * Otherwise, redirect the user to the invalid login page and
+				 * ask them to log in again with the proper credentials.
+				 */
+				//If email is unique, 
 				//check if email is in an email form e.g. has an @, no spaces
 				//check password requirements are met
 			
@@ -74,6 +77,7 @@ public class SignupController extends HttpServlet {
 			if (goodpassword && emailisvalid){
 				//insert into db
 				MemberDao.adduser(member);
+				response.sendRedirect("successfulaccountcreation.jsp");
 			} 
 			
 			if (!emailisvalid){
@@ -86,22 +90,9 @@ public class SignupController extends HttpServlet {
 				response.sendRedirect("badpassword.jsp");
 			}
 			
-			
-			
-			
-			
-
-			
-			
-			
-
-			else {
-				/**
-				 * Otherwise, redirect the user to the invalid login page and
-				 * ask them to log in again with the proper credentials.
-				 */
-				response.sendRedirect("login.jsp");
 			}
+			
+			
 		}
 
 		catch (Throwable theException) {

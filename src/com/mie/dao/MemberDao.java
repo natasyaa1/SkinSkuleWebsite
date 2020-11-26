@@ -98,49 +98,49 @@ public class MemberDao {
 		 * Prepare a query that searches the members table in the database
 		 * with the given username and password.
 		 */
-//		String searchQuery = "select * from members where email='"
-//				+ email + "'";
+		String searchQuery = "select * from Users where Email_Address='"
+				+ email + "'";
 
 		try {
 			// connect to DB
 			
 			currentCon = DbUtil.getConnection();
 			stmt = currentCon.createStatement();
-//			rs = stmt.executeQuery(searchQuery);
-//			boolean more = rs.next();
-
-//			/**
-//			 * If there are no results from the query, set the boolean to true.
-//			 * 
-//			 * 
-//			 */
-//			
-//			if (!more) {
-//				
-//				return true;
-//				//member.setValid(false);
-//			}
+			rs = stmt.executeQuery(searchQuery);
+			boolean more = rs.next();
 //
-//			/**
-//			 * If the query results in an database entry that matches an
-//			 * email in the database, set the boolean to false
-//			 * ask the user to login instead
+////			/**
+////			 * If there are no results from the query, set the boolean to true.
+////			 * 
+////			 * 
 //			 */
-//			else if (more) {
-////				String firstName = rs.getString("FirstName");
-////				String lastName = rs.getString("LastName");
-////
-////				member.setFirstName(firstName);
-////				member.setLastName(lastName);
-////				member.setValid(true);
-//				return false;
-//			}
-			PreparedStatement st = currentCon.prepareStatement("select * from Members where email_address = ?");
-			st.setString(1, email);
-			ResultSet r1=st.executeQuery();
-			if(r1.next()) {
-			  return true;
+			
+			if (!more) {
+				
+				return true;
+				//member.setValid(false);
 			}
+
+////			/**
+////			 * If the query results in an database entry that matches an
+////			 * email in the database, set the boolean to false
+////			 * ask the user to login instead
+////			 */
+////			else if (more) {
+//////				String firstName = rs.getString("FirstName");
+//////				String lastName = rs.getString("LastName");
+//////
+//////				member.setFirstName(firstName);
+//				member.setLastName(lastName);
+//				member.setValid(true);
+			return false;
+			
+//			PreparedStatement st = currentCon.prepareStatement("select * from Members where Email_Address = ?");
+//			st.setString(1, email);
+//			ResultSet r1=st.executeQuery();
+//			if(r1.next()) {
+//			  return true;
+//			}
 		
 		}
 
@@ -229,12 +229,21 @@ public class MemberDao {
 		 * Prepare a query that searches the members table in the database
 		 * with the given username and password.
 		 */
-		String insertQuery = "insert into users(Name, Email_Address, Password, SkinType_ID) "
-				+ "VALUES (" + name + ", " +
-          email + ", " + password + ", " + skintype_id + ")";
+//		String insertQuery = "insert into Users(Name, Email_Address, Password, SkinType_ID) "
+//				+ "VALUES ('" + name + "', '" +
+//          email + ", " + password + ", " + skintype_id + ")";
 		try{
 			currentCon = DbUtil.getConnection();
-			PreparedStatement preparedStatement = currentCon.prepareStatement(insertQuery);
+//			PreparedStatement preparedStatement = currentCon.prepareStatement(insertQuery);
+//			preparedStatement.executeUpdate();
+			PreparedStatement preparedStatement = currentCon
+					.prepareStatement("insert into Users(Name, Email_Address, Password, SkinType_ID) values (?, ?, ?, ? )");
+			// Parameters start with 1
+			preparedStatement.setString(1, name);
+			preparedStatement.setString(2, email);
+			preparedStatement.setString(3, password);
+			preparedStatement.setString(4, skintype_id);
+			preparedStatement.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
