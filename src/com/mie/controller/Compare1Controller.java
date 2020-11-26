@@ -24,7 +24,7 @@ public class Compare1Controller extends HttpServlet {
 	private ProductListDao dao;
 
 	/**
-	 * Constructor for this class.
+	 * Constructor for this class. 
 	 */
 	public Compare1Controller() {
 		super();

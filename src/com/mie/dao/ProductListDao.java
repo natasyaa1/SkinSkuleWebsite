@@ -18,7 +18,7 @@ public class ProductListDao {
 	 * (get).
 	 */
 
-	private Connection connection;
+	private Connection connection; 
 
 	public ProductListDao() {
 		/**
