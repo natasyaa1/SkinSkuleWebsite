@@ -57,4 +57,24 @@
     <servlet-name>SignupController</servlet-name>
     <url-pattern>/SignupController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Compare1Controller</display-name>
+    <servlet-name>Compare1Controller</servlet-name>
+    <servlet-class>com.mie.controller.Compare1Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Compare1Controller</servlet-name>
+    <url-pattern>/Compare1Controller</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CompareController</display-name>
+    <servlet-name>CompareController</servlet-name>
+    <servlet-class>com.mie.controller.CompareController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompareController</servlet-name>
+    <url-pattern>/CompareController</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -15,7 +15,7 @@
 				<li><a
 					href="/mie350webapp/StudentController?action=listStudent">Student
 						List (Public)</a></li>
-				<li><a href="searchStudent.jsp">Hello World</a></li>
+				<li><a href="Comparison4.jsp">Comparison4</a></li>
 				<li class="dropdown"><a data-toggle="dropdown"
 					href="helpful_links.jsp">Other Links<b class="caret"></b></a>
 					<ul class="dropdown-menu">
