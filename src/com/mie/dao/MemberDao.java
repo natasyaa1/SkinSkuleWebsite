@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import com.mie.util.DbUtil;
 import com.mie.model.*;
@@ -92,47 +93,55 @@ public class MemberDao {
 		Statement stmt = null;
 
 		String email = member.getEmail();
-
+		
 		/**
 		 * Prepare a query that searches the members table in the database
 		 * with the given username and password.
 		 */
-		String searchQuery = "select * from members where email='"
-				+ email + "'";
+//		String searchQuery = "select * from members where email='"
+//				+ email + "'";
 
 		try {
 			// connect to DB
+			
 			currentCon = DbUtil.getConnection();
 			stmt = currentCon.createStatement();
-			rs = stmt.executeQuery(searchQuery);
-			boolean more = rs.next();
+//			rs = stmt.executeQuery(searchQuery);
+//			boolean more = rs.next();
 
-			/**
-			 * If there are no results from the query, set the boolean to true.
-			 * 
-			 * 
-			 */
-			
-			if (!more) {
-				
-				return true;
-				//member.setValid(false);
-			}
-
-			/**
-			 * If the query results in an database entry that matches an
-			 * email in the database, set the boolean to false
-			 * ask the user to login instead
-			 */
-			else if (more) {
-//				String firstName = rs.getString("FirstName");
-//				String lastName = rs.getString("LastName");
+//			/**
+//			 * If there are no results from the query, set the boolean to true.
+//			 * 
+//			 * 
+//			 */
+//			
+//			if (!more) {
+//				
+//				return true;
+//				//member.setValid(false);
+//			}
 //
-//				member.setFirstName(firstName);
-//				member.setLastName(lastName);
-//				member.setValid(true);
-				return false;
+//			/**
+//			 * If the query results in an database entry that matches an
+//			 * email in the database, set the boolean to false
+//			 * ask the user to login instead
+//			 */
+//			else if (more) {
+////				String firstName = rs.getString("FirstName");
+////				String lastName = rs.getString("LastName");
+////
+////				member.setFirstName(firstName);
+////				member.setLastName(lastName);
+////				member.setValid(true);
+//				return false;
+//			}
+			PreparedStatement st = currentCon.prepareStatement("select * from Members where email_address = ?");
+			st.setString(1, email);
+			ResultSet r1=st.executeQuery();
+			if(r1.next()) {
+			  return true;
 			}
+		
 		}
 
 		catch (Exception ex) {
@@ -144,9 +153,69 @@ public class MemberDao {
 		 */
 		//return member;
 		return false;
-
+	}
+	
+	public static boolean checkemailvalid(Member member) {
+		String email = member.getEmail();
+//		boolean atsignFlag = false;
+//		if (email.contains("@")){
+//			return atsignFlag = true;
+//		}else if (email.contains(".")){
+//			return atsignFlag = true;
+//		}
+//		return false;
+		
+	
+	        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+	                            "[a-zA-Z0-9_+&*-]+)*@" + 
+	                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+	                            "A-Z]{2,7}$"; 
+	                              
+	        Pattern pat = Pattern.compile(emailRegex); 
+	        if (email == null) 
+	            return false; 
+	        return pat.matcher(email).matches(); 
+	  
 
 	}
+	
+	public static boolean checkpassword(Member member) {
+
+
+		String password = member.getPassword();
+		
+		
+
+		 char ch;
+		    
+		    boolean capitalFlag = false;
+		    boolean lowerCaseFlag = false;
+		    boolean numberFlag = false;
+		    boolean atleast8chFlag = false;
+		    
+		    if (password.length() >= 8){
+		    	atleast8chFlag = true;
+		    }
+		    
+		    for(int i=0;i < password.length();i++) {
+		        ch = password.charAt(i);
+		        
+		        if( Character.isDigit(ch)) {
+		            numberFlag = true;
+		        }
+		        else if (Character.isUpperCase(ch)) {
+		            capitalFlag = true;
+		        } else if (Character.isLowerCase(ch)) {
+		            lowerCaseFlag = true;
+		        }
+		        if(numberFlag && capitalFlag && lowerCaseFlag && atleast8chFlag)
+		            return true;
+		    }
+		    return false;
+		
+		
+	}
+
 	public static void adduser(Member member) {
 		Statement stmt = null;
 		//Integer user_id = member.getUser_ID();
@@ -154,7 +223,7 @@ public class MemberDao {
 		String email = member.getEmail();
 		String password = member.getPassword();
 		String skintype_id = member.getSkinType_ID();
-		Date date = new Date();
+		//Date date = new Date();
 
 		/**
 		 * Prepare a query that searches the members table in the database

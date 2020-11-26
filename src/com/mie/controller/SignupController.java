@@ -31,7 +31,6 @@ public class SignupController extends HttpServlet {
 		member.setPassword(request.getParameter("pw"));
 		member.setSkinType_ID(request.getParameter("sk"));
 		
-		MemberDao.adduser(member);
 
 		try {
 			//Checks if email is unique
@@ -39,6 +38,8 @@ public class SignupController extends HttpServlet {
 			 * Try to see if the member exist.
 			 */
 			boolean uniqueemail = MemberDao.checkemail(member);
+			boolean emailisvalid = MemberDao.checkemailvalid(member);
+			boolean goodpassword = MemberDao.checkpassword(member);
 			
 			//If email already exists in database, ask them to login instead or redirect to login page
 			
@@ -46,7 +47,7 @@ public class SignupController extends HttpServlet {
 			 * If the isValid value is true, assign session attributes to the
 			 * current member.
 			 */
-			if (uniqueemail) {
+			if (!uniqueemail) {
 
 //				HttpSession session = request.getSession(true);
 //				session.setAttribute("currentSessionmember", member);
@@ -68,6 +69,24 @@ public class SignupController extends HttpServlet {
 			//If email is unique, 
 				//check if email is in an email form e.g. has an @, no spaces
 				//check password requirements are met
+			
+			
+			if (goodpassword && emailisvalid){
+				//insert into db
+				MemberDao.adduser(member);
+			} 
+			
+			if (!emailisvalid){
+				//display error message
+				response.sendRedirect("bademail.jsp");
+			}
+			
+			if (!goodpassword){ //if passw not good
+				//display error message
+				response.sendRedirect("badpassword.jsp");
+			}
+			
+			
 			
 			
 			
