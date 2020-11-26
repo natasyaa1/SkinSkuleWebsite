@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import com.mie.util.DbUtil;
 import com.mie.model.*;
 import com.mie.controller.*;
 import com.mie.util.*;
+
 
 public class MemberDao {
 
@@ -152,17 +154,24 @@ public class MemberDao {
 		String email = member.getEmail();
 		String password = member.getPassword();
 		String skintype_id = member.getSkinType_ID();
+		Date date = new Date();
 
 		/**
 		 * Prepare a query that searches the members table in the database
 		 * with the given username and password.
 		 */
-		String searchQuery = "insert into users(Name, Email_Address, Password, SkinType_ID) "
+		String insertQuery = "insert into users(Name, Email_Address, Password, SkinType_ID) "
 				+ "VALUES (" + name + ", " +
           email + ", " + password + ", " + skintype_id + ")";
-				
+		try{
+			currentCon = DbUtil.getConnection();
+			PreparedStatement preparedStatement = currentCon.prepareStatement(insertQuery);
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
+	
 	
 }
